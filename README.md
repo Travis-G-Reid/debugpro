@@ -95,3 +95,7 @@ Dictionary: my_list = {'example_key_1': 'some_value', 'example_key_2': 'other_va
 Missing key: 'example_key_999'
 Available keys: ['example_key_1', 'example_key_2']
 ```
+
+# Roadmap
+- Variable history tracking (using sys.settrace hook)
+- Object child data observability
