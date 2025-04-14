@@ -1,4 +1,4 @@
-from debugpro.excepthook import install_custom_excepthook
+from debugpro import install_custom_excepthook
 
 if __name__ == "__main__":
     install_custom_excepthook()
