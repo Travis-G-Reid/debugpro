@@ -35,6 +35,7 @@ def _get_frame_info(frame: FrameType) -> Tuple[Dict[str, str], Dict[str, str], D
             
     return modules, functions, variables
 
+
 def _print_frame_info(frame: FrameType, filename: str, lineno: int, line: str):
     """Print detailed information about the frame where the exception occurred."""
     modules, functions, variables = _get_frame_info(frame)
@@ -76,6 +77,7 @@ def _print_frame_info(frame: FrameType, filename: str, lineno: int, line: str):
     else:
         print("  None")
 
+
 def _print_code_context(filename: str, lineno: int, error_color: str, reset_color: str):
     """Print code context around the error line."""
     # Count total lines in file
@@ -108,6 +110,7 @@ def _print_code_context(filename: str, lineno: int, error_color: str, reset_colo
         print(f"   ... ({lines_below} more lines below)")
     else:
         print("  --- End of file ---")
+
 
 def _custom_excepthook(exc_type: Type[BaseException], 
                      exc_value: BaseException, 
