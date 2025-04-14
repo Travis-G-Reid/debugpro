@@ -327,22 +327,14 @@ def _get_exception_details_NameError(exc_value, frame, **kwargs):
 
 
 def _get_exception_details(exc_type, exc_value, frame, **kwargs):
-    exception_details = {}
     if issubclass(exc_type, KeyError):
-        # Special handling for KeyError
         return _get_exception_details_KeyError(**locals(), **kwargs)
-    
     elif issubclass(exc_type, (IndexError, TypeError)):
         return _get_exception_details_IndexError_TypeError(**locals(), **kwargs)
-    
     elif issubclass(exc_type, AttributeError):
         return _get_exception_details_AttributeError(**locals(), **kwargs)
-    
     elif issubclass(exc_type, NameError):
-        # Special handling for NameError
         return _get_exception_details_NameError(**locals(), **kwargs)
-
-    return exception_details
 
 
 def _custom_excepthook(exc_type: Type[BaseException], 
