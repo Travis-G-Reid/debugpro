@@ -1,4 +1,4 @@
-# debug-pro
+# debugpro
 debug like a pro
 
 Import the project `from debugpro import install_custom_excepthook` and run `install_custom_excepthook()` to enable the custom exception messages.
