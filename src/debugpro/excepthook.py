@@ -185,7 +185,7 @@ def _print_exception_header(exc_type, exc_value, **kwargs):
     print(f"{BOLD}{RED}{'=' * 60}{RESET}")
 
 
-def _print_exception_details(exception_details, exc_type, exc_value, **kwargs):
+def _print_exception_details(exception_details, exc_type, exc_value, line, **kwargs):
     YELLOW = "\033[33m"
     RED = "\033[31m"
     BOLD = "\033[1m"
@@ -381,7 +381,7 @@ def _custom_excepthook(exc_type: Type[BaseException],
         exception_details = _get_exception_details(**kwargs)
 
         if exception_details:
-            _print_exception_details(exception_details, exc_type, exc_value)
+            _print_exception_details(exception_details, **kwargs)
         else:
             sys.__excepthook__(exc_type, exc_value, exc_traceback)
 
