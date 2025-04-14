@@ -204,7 +204,6 @@ def _print_exception_details(exception_details, exc_type, exc_value, line, **kwa
             print(f"{YELLOW}Length:{RESET} {exception_details['length']}")
         if "valid_indices" in exception_details:
             print(f"{YELLOW}Valid indices:{RESET} {exception_details['valid_indices']}")
-            # TODO: Add "Index that doesn't exist: {the invalid index}" here
         try:
             bad_idx = line.split('[')[1].split(']')[0]
             print(f"{YELLOW}Invalid index:{RESET} {bad_idx}")
