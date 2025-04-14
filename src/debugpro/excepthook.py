@@ -56,7 +56,7 @@ def _get_frame_info(frame: FrameType) -> Tuple[Dict[str, str], Dict[str, str], D
     return modules, functions, variables
 
 
-def _print_frame_info(frame: FrameType, filename: str, lineno: int, line: str, **kwargs):
+def _print_frame_info(frame: FrameType, **kwargs) -> None:
     """Print detailed information about the frame where the exception occurred."""
     modules, functions, variables = _get_frame_info(frame)
     
@@ -98,7 +98,7 @@ def _print_frame_info(frame: FrameType, filename: str, lineno: int, line: str, *
         print("  None")
 
 
-def _print_code_context(filename: str, lineno: int, **kwargs):
+def _print_code_context(filename: str, lineno: int, **kwargs) -> None:
     """Print code context around the error line.
     
     Example:
@@ -149,7 +149,7 @@ def _print_code_context(filename: str, lineno: int, **kwargs):
         print("  --- End of file ---")
 
 
-def _print_stack_frames(exc_traceback, **kwargs):
+def _print_stack_frames(exc_traceback, **kwargs) -> None:
     """ Prints the stack trace. Example:
 
     ------ Stack Trace ------
@@ -183,7 +183,7 @@ def _print_stack_frames(exc_traceback, **kwargs):
         print(f"{i}. {CYAN}{name}{RESET} in {shortened_path}:{lineno}")
 
 
-def _print_file_location(filename, lineno, **kwargs):
+def _print_file_location(filename, lineno, **kwargs) -> None:
     YELLOW = "\033[33m"
     CYAN = "\033[36m"
     BOLD = "\033[1m"
@@ -196,7 +196,7 @@ def _print_file_location(filename, lineno, **kwargs):
     print(f"\n{YELLOW}Location: {CYAN}{shortened_path}{RESET}, line {BOLD}{lineno}{RESET}")
 
 
-def _print_exception_header(exc_type, exc_value, **kwargs):
+def _print_exception_header(exc_type, exc_value, **kwargs) -> None:
     """ Prints the exception header.
     
     Example:
@@ -214,7 +214,7 @@ def _print_exception_header(exc_type, exc_value, **kwargs):
     print(f"{BOLD}{RED}{'=' * 60}{RESET}")
 
 
-def _print_exception_details(exception_details, exc_type, exc_value, line, **kwargs):
+def _print_exception_details(exception_details: dict[str, Any], exc_type, exc_value, line, **kwargs) -> None:
     """Print exception details specific to the type of exception.
     
     Example:
@@ -272,7 +272,7 @@ def _print_exception_details(exception_details, exc_type, exc_value, line, **kwa
             print(f"{YELLOW}Similar variable names:{RESET} {exception_details['similar_variables']}")
 
 
-def _get_exception_details_KeyError(exc_value, frame, line, **kwargs):
+def _get_exception_details_KeyError(exc_value, frame, line, **kwargs) -> dict[str, Any]:
     culprit_var = None
     exception_details = {}
     for name, val in frame.f_locals.items():
@@ -297,7 +297,7 @@ def _get_exception_details_KeyError(exc_value, frame, line, **kwargs):
     return exception_details
 
 
-def _get_exception_details_IndexError_TypeError(frame, line, exc_type, **kwargs):
+def _get_exception_details_IndexError_TypeError(frame, line, exc_type, **kwargs) -> dict[str, Any]:
     exception_details = {}
     var_name = None
     for name, val in frame.f_locals.items():
@@ -317,7 +317,7 @@ def _get_exception_details_IndexError_TypeError(frame, line, exc_type, **kwargs)
     return exception_details
 
 
-def _get_exception_details_AttributeError(exc_value, frame, line, **kwargs):
+def _get_exception_details_AttributeError(exc_value, frame, line, **kwargs) -> dict[str, Any]:
     exception_details = {}
     attr_name = str(exc_value).split("'")[1] if "'" in str(exc_value) else None
     if attr_name:
@@ -349,7 +349,7 @@ def _get_exception_details_AttributeError(exc_value, frame, line, **kwargs):
     return exception_details
 
 
-def _get_exception_details_NameError(exc_value, frame, **kwargs):
+def _get_exception_details_NameError(exc_value, frame, **kwargs) -> dict[str, Any]:
     exception_details = {}
     var_name = str(exc_value).split("'")[1] if "'" in str(exc_value) else None
     if var_name:
@@ -365,7 +365,7 @@ def _get_exception_details_NameError(exc_value, frame, **kwargs):
     return exception_details
 
 
-def _get_exception_details(exc_type, exc_value, frame, **kwargs):
+def _get_exception_details(exc_type, **kwargs) -> dict[str, Any]:
     if issubclass(exc_type, KeyError):
         return _get_exception_details_KeyError(**locals(), **kwargs)
     elif issubclass(exc_type, (IndexError, TypeError)):
@@ -378,7 +378,7 @@ def _get_exception_details(exc_type, exc_value, frame, **kwargs):
 
 def _custom_excepthook(exc_type: Type[BaseException], 
                      exc_value: BaseException, 
-                     exc_traceback: Optional[TracebackType]):
+                     exc_traceback: Optional[TracebackType]) -> None:
     """Enhanced exception hook that provides detailed debugging information."""
     # Note: As per python convention, `tb` indicates "traceback" and
     #  `co` indicates "code object", a Python interpreter-related code object
@@ -417,6 +417,6 @@ def _custom_excepthook(exc_type: Type[BaseException],
             sys.__excepthook__(exc_type, exc_value, exc_traceback)
 
 
-def install_custom_excepthook():
+def install_custom_excepthook() -> None:
     print("[debug-pro] Custom except hook enabled")
     sys.excepthook = _custom_excepthook
