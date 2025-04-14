@@ -2,16 +2,19 @@
 requires = ["setuptools>=61", "wheel"]
 build-backend = "setuptools.build_meta"
 
+[tool.setuptools]
+package-dir = {"" = "src"}
+packages = ["debugpro"]
+
 [project]
 name = "debugpro"
 version = "0.1.0"
 description = "Prototype version of debugpro"
 readme = "README.md"
 requires-python = ">=3.8"
-license = { text = "MIT" }
 
 authors = [
-    { name = "Your Name", email = "you@example.com" }
+    { name = "Travis Reid", email = "travisreid0901@gmail.com" }
 ]
 
 dependencies = []
