@@ -278,8 +278,6 @@ def _get_exception_details_IndexError_TypeError(frame, line, exc_type, **kwargs)
 
 def _get_exception_details_AttributeError(exc_value, frame, line, **kwargs):
     exception_details = {}
-
-    # Special handling for AttributeError
     attr_name = str(exc_value).split("'")[1] if "'" in str(exc_value) else None
     if attr_name:
         for name, val in frame.f_locals.items():
