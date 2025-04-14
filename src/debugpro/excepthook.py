@@ -13,7 +13,27 @@ __all__ = ["install_custom_excepthook"]
 
 
 def _get_frame_info(frame: FrameType) -> Tuple[Dict[str, str], Dict[str, str], Dict[str, str]]:
-    """Extract and categorize local variables from a frame."""
+    """Extract and categorize local variables from a frame.
+    
+    Return Example:
+    
+    ------ Modules ------
+    numpy
+    pandas
+    matplotlib
+
+    ------ Functions ------
+    calculate_something
+    get_information
+
+    ------ Variables ------
+    my_dictionary = {'a': 1, 'b': 2, 'c': 3}
+    my_int = 5
+    my_str = 'some_string string'
+    
+    Formatting occurs at a later date.
+    
+    """
     modules = {}
     functions = {}
     variables = {}
@@ -177,6 +197,15 @@ def _print_file_location(filename, lineno, **kwargs):
 
 
 def _print_exception_header(exc_type, exc_value, **kwargs):
+    """ Prints the exception header.
+    
+    Example:
+
+    ============================================================
+    ERROR: KeyError: 5
+    ============================================================
+    
+    """
     RED = "\033[31m"
     BOLD = "\033[1m"
     RESET = "\033[0m"
@@ -186,6 +215,19 @@ def _print_exception_header(exc_type, exc_value, **kwargs):
 
 
 def _print_exception_details(exception_details, exc_type, exc_value, line, **kwargs):
+    """Print exception details specific to the type of exception.
+    
+    Example:
+    
+    ------ IndexError Details ------
+    Collection: my_list = [1, 2, 3]
+    Length: 3
+    Valid indices: 0 to 2
+    Invalid index: 4
+
+    """
+    # TODO: I should probably refactor this for better dispatching to align with exception types.
+
     YELLOW = "\033[33m"
     RED = "\033[31m"
     BOLD = "\033[1m"
