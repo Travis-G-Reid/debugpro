@@ -135,7 +135,6 @@ def _custom_excepthook(exc_type: Type[BaseException],
         print(f"\n{BOLD}{RED}{'=' * 60}{RESET}")
         print(f"{BOLD}{RED}ERROR: {exc_type.__name__}: {exc_value}{RESET}")
         print(f"{BOLD}{RED}{'=' * 60}{RESET}")
-
         
         
         # Extract exception-specific information
