@@ -1,4 +1,4 @@
-from debug_pro.excepthook import install_custom_excepthook
+from debugpro.excepthook import install_custom_excepthook
 
 def test_KeyError():
     my_dict = {'a': 1, 'b': 2, 'c': 3}
