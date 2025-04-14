@@ -9,7 +9,10 @@ from types import FrameType, TracebackType
 from typing import Dict, Any, Type, Optional, Tuple
 
 
-def get_frame_info(frame: FrameType) -> Tuple[Dict[str, str], Dict[str, str], Dict[str, str]]:
+__all__ = ["install_custom_excepthook"]
+
+
+def _get_frame_info(frame: FrameType) -> Tuple[Dict[str, str], Dict[str, str], Dict[str, str]]:
     """Extract and categorize local variables from a frame."""
     modules = {}
     functions = {}
@@ -32,9 +35,9 @@ def get_frame_info(frame: FrameType) -> Tuple[Dict[str, str], Dict[str, str], Di
             
     return modules, functions, variables
 
-def print_frame_info(frame: FrameType, filename: str, lineno: int, line: str):
+def _print_frame_info(frame: FrameType, filename: str, lineno: int, line: str):
     """Print detailed information about the frame where the exception occurred."""
-    modules, functions, variables = get_frame_info(frame)
+    modules, functions, variables = _get_frame_info(frame)
     
     # Print modules
     print("\n------ Modules ------")
@@ -73,7 +76,7 @@ def print_frame_info(frame: FrameType, filename: str, lineno: int, line: str):
     else:
         print("  None")
 
-def print_code_context(filename: str, lineno: int, error_color: str, reset_color: str):
+def _print_code_context(filename: str, lineno: int, error_color: str, reset_color: str):
     """Print code context around the error line."""
     # Count total lines in file
     line_count = 0
@@ -106,7 +109,7 @@ def print_code_context(filename: str, lineno: int, error_color: str, reset_color
     else:
         print("  --- End of file ---")
 
-def custom_excepthook(exc_type: Type[BaseException], 
+def _custom_excepthook(exc_type: Type[BaseException], 
                      exc_value: BaseException, 
                      exc_traceback: Optional[TracebackType]):
     """Enhanced exception hook that provides detailed debugging information."""
@@ -235,7 +238,7 @@ def custom_excepthook(exc_type: Type[BaseException],
                     exception_advice.append(f"Did you mean one of these? {', '.join(similar_vars)}")
         
         # Print local variables and other frame info
-        print_frame_info(frame, filename, lineno, line)
+        _print_frame_info(frame, filename, lineno, line)
         
         # Print file location
         file_path_parts = filename.split(os.sep)
@@ -269,7 +272,7 @@ def custom_excepthook(exc_type: Type[BaseException],
             print(f"{i}. {CYAN}{name}{RESET} in {shortened_path}:{lineno}")
 
         # Print exception-specific details (moved to the bottom)
-        print_code_context(filename, lineno, RED, RESET)
+        _print_code_context(filename, lineno, RED, RESET)
 
         if exception_details:
             print(f"\n{BOLD}{RED}------ {exception_details.get('type', exc_type.__name__)} Details ------{RESET}")
@@ -317,19 +320,7 @@ def custom_excepthook(exc_type: Type[BaseException],
         # Fall back to the default excepthook if we couldn't extract useful information
         sys.__excepthook__(exc_type, exc_value, exc_traceback)
 
-# Install the custom exception hook
-sys.excepthook = custom_excepthook
 
-# Test case
-if __name__ == "__main__":
-    # Test KeyError
-    my_dict = {'a': 1, 'b': 2, 'c': 3}
-    # my_dict[5]
-
-    # Test IndexError
-    my_list = [1, 2, 3]
-    # my_list[4]
-
-    # Test AttributeError
-    my_str = "hello"
-    # my_str.append("world")
+def install_custom_excepthook():
+    print("[debug-pro] Custom except hook enabled")
+    sys.excepthook = _custom_excepthook

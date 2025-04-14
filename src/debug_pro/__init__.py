@@ -1,0 +1,1 @@
+from .excepthook import install_custom_excepthook
