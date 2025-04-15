@@ -46,7 +46,7 @@ package-dir = {"" = "src"} # Only if your packages directory is inside of source
 packages = ["example_package"] # This specifies which package to export and make available during installation.
 ```
 
-Critical Fields for Package Availability
+# Critical Fields for Package Availability
 
 1. [build-system]
 This mandatory section defines how your package is built:
