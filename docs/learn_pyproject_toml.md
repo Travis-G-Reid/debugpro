@@ -45,6 +45,7 @@ packages = ["example_package"] # This specifies which package to export and make
 ```
 
 Critical Fields for Package Availability
+
 1. [build-system]
 This mandatory section defines how your package is built:
 
@@ -52,6 +53,7 @@ requires: Lists build-time dependencies (not runtime)
 build-backend: Specifies which system builds your package
 
 Without this section, modern packaging tools won't know how to build your package.
+
 2. [project]
 This core section contains essential metadata:
 
