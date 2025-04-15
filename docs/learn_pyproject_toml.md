@@ -63,10 +63,12 @@ dependencies: Runtime requirements for your package
 The name and version fields are particularly critical - they identify your package uniquely in repositories like PyPI.
 3. requires-python
 This field prevents installation on incompatible Python versions. If omitted, your package might be installed on Python versions where it fails to run.
+
 4. [project.optional-dependencies]
 Defines feature sets users can optionally install:
 bashpip install example-package[dev]
 This keeps your base package lean while offering enhanced functionality for those who need it.
+
 5. [tool.setuptools] Package Structure
 These fields tell the build system where to find your code:
 
