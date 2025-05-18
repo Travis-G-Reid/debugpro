@@ -5,6 +5,8 @@ Import the project `from debugpro import install_custom_excepthook` and run `ins
 
 Note: The console print includes colored and bolded text whose rich formatting may be partially lost when running inside a container or other abstraction.
 
+To run the tests in the source repository, you must first run `pip install -e .` from the project root to install this repository as an editable, runnable package. If you do not install the package, it will not be accessible.
+
 Example input/output:
 
 Input:
